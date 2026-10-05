@@ -34,11 +34,18 @@ You can also use it in Jenkins, by creating a new pipeline. The Jenkinsfile is a
 
 You can have multiple FortiGate included in the backup, you juste need to add other entries in the `JSON` file :
 ```JSON
-    {
-        "name": "FORTI_NAME_XXX",
-        "ip": "FORTI_IP_XXX",
-        "token": "FORTI_TOKEN_XXX"
-    }
+[
+  {
+      "name": "FORTI_NAME_XXX",
+      "ip": "FORTI_IP_XXX",
+      "token": "FORTI_TOKEN_XXX"
+  },
+  {
+      "name": "FORTI_NAME_XXX",
+      "ip": "FORTI_IP_XXX",
+      "token": "FORTI_TOKEN_XXX"
+  }
+]
 ```
 Don't forget to ajust the `.env` file or `Jenkins` attributes to match your JSON configuration.
 
