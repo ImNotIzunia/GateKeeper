@@ -1,8 +1,9 @@
-# Forti-Backup
+# GateKeeper
 
+[![fortigate](https://img.shields.io/badge/FortiGate-Backup-blue.svg)]
 [![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 
-"Forti-Backup" is a backup script launched by Jenkins to save the configuration of the FortiGate and send the backup file into another server.
+GateKeeper is a backup script launched by Jenkins to save the configuration of the FortiGate and send the backup file into another server.
 
 ## Requirements
 
@@ -17,9 +18,9 @@
 
 You can either clone the repository and run the script locally.
 ```Bash
-git clone https://github.com/ImNotIzunia/Forti-Backup.git
+git clone https://github.com/ImNotIzunia/GateKeeper.git
 
-cd Forti-Backup
+cd GateKeeper
 pip install -r requirements.txt
 chmod +x copy.sh
 
