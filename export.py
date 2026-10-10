@@ -11,35 +11,33 @@ load_dotenv()
 
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
-
 Path("backup").mkdir(exist_ok=True)
 
 with open("fortigate.json", encoding="utf-8") as fichier:
     forti = json.load(fichier)
 
-
 errors = []
-
 
 for f in forti:
     name = os.getenv(f["name"])
     ip = os.getenv(f["ip"])
     token = os.getenv(f["token"])
 
-    url = f"https://{ip}:8443/api/v2/monitor/system/config/backup"
+    if not all([name, ip, token]):
+        print(f"Missing Variables: {f}")
+        errors.append(f["name"])
+        continue
+
+    url = f"https://{ip}/api/v2/monitor/system/config/backup"
 
     try:
-        response = requests.post(
+        # FortiOS 6.2 : l'endpoint de backup utilise GET (POST = 405)
+        response = requests.get(
             url,
             headers={"Authorization": f"Bearer {token}"},
-            json={
-                "destination": "file",
-                "scope": "global",
-                "password_mask": False,
-                "file_format": "fos"
-            },
+            params={"destination": "file", "scope": "global"},
             verify=False,
-            timeout=60
+            timeout=60,
         )
 
         if response.status_code == 200:
@@ -55,5 +53,9 @@ for f in forti:
             errors.append(name)
 
     except requests.exceptions.RequestException as e:
-        print(f"Error : {e}")
+        print(f"Error for {name} : {e}")
+        errors.append(name)
 
+if errors:
+    print(f"Failed for: {', '.join(errors)}")
+    raise SystemExit(1)
